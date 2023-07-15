@@ -11,7 +11,7 @@ const Header = () => {
             </NavLink>
           </div>
           <div>
-            <nav className='py-3 space-x-10'>
+            <nav className='py-3 space-x-5 md:space-x-10'>
               <NavLink to='/' className={({isActive}) => (isActive ? "text-black  border-b-red-400 border-b-[3px] py-3 font-semibold" : "text-gray-400 font-semibold")}>
                 Home
               </NavLink>
