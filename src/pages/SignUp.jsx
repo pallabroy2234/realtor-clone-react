@@ -1,12 +1,17 @@
 import {useState} from "react";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import OAuth from "../components/OAuth";
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import {db} from "../firebase";
+import {doc, serverTimestamp, setDoc} from "firebase/firestore";
+import {toast} from "react-toastify";
+
 const SignUp = () => {
   const [formData, setFormData] = useState({email: "", password: "", name: ""});
   const {name, email, password} = formData;
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const onChange = (e) => {
     setFormData((prevState) => {
       return {
@@ -16,10 +21,25 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredential.user;
+      const formDataCopy = {...formData};
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      navigate("/");
+      toast.success("Sign Up successful");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -66,7 +86,6 @@ const SignUp = () => {
             <div className='flex items-center mb-5 before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:bg-gray-300'>
               <p className='mx-4 font-semibold text-center'>OR</p>
             </div>
-
             <OAuth />
           </form>
         </div>
