@@ -16,14 +16,43 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/sign-in' element={<SignIn />} />
-          <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/offers' element={<Offers />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route
+            path='/'
+            element={<Home />}
+          />
+          <Route
+            path='/profile'
+            element={<Profile />}
+          />
+          <Route
+            path='/sign-in'
+            element={<SignIn />}
+          />
+          <Route
+            path='/sign-up'
+            element={<SignUp />}
+          />
+          <Route
+            path='/offers'
+            element={<Offers />}
+          />
+          <Route
+            path='/forgot-password'
+            element={<ForgotPassword />}
+          />
         </Routes>
-        <ToastContainer position='bottom-center' autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme='dark' />
+        <ToastContainer
+          position='bottom-center'
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='dark'
+        />
       </BrowserRouter>
     </>
   );
